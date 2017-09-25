@@ -81,7 +81,7 @@ DATABASES = {
         'PORT': os.getenv('DATABASE_PORT', '5432'),
         'USER': os.getenv('DATABASE_USER'),
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-        'NAME': os.getenv('DATABASE_NAME', 'office_manager'),
+        'NAME': os.getenv('DATABASE_NAME', 'company_clients'),
     }
 }
 
