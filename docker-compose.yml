@@ -4,9 +4,9 @@ services:
   database:
     image: postgres
     environment:
-      POSTGRES_USER: company_clients_demo_user
-      POSTGRES_DB: company_clients
-      POSTGRES_PASSWORD: foobar
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
         - ./dbdata:/var/lib/postgresql/data
 
