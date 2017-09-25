@@ -3,37 +3,28 @@ version: '3'
 services:
   database:
     image: postgres
-    environment:
-      POSTGRES_USER: officemanager
-      POSTGRES_DB: officemanager
-      POSTGRES_PASSWORD: qweqwe123
     volumes:
         - ./dbdata:/var/lib/postgresql/data
+    env_file:
+        - ./development.env
 
   redis:
     image: redis
     environment:
       - ALLOW_EMPTY_PASSWORD=no
       - REDIS_PASSWORD=redis
+    env_file:
+      - ./development.env
 
   web:
     build: ./
     depends_on:
       - "database"
       - "redis"
-    command: bash -c "
-        python3 manage.py makemigrations &&
-        python3 manage.py migrate &&
-        python3 manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python3 manage.py makemigrations &&
+                      python3 manage.py migrate &&
+                      python3 manage.py runserver 0.0.0.0:8000"
     ports:
       - "8000:8000"
-    environment:
-      - DEBUG=True  # set to False in production
-      - DB_NAME=officemanager
-      - DB_USER=officemanager
-      - DB_PASSWORD=qweqwe123
-      - DB_HOST=database
-      - DB_PORT=5432
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - REDIS_PASSWORD=redis
+    env_file:
+      - ./development.env
