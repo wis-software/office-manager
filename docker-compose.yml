@@ -4,9 +4,9 @@ services:
   database:
     image: postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: officemanager
+      POSTGRES_DB: officemanager
+      POSTGRES_PASSWORD: qweqwe123
     volumes:
         - ./dbdata:/var/lib/postgresql/data
 
@@ -29,9 +29,9 @@ services:
       - "8000:8000"
     environment:
       - DEBUG=True  # set to False in production
-      - DB_NAME=office
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
+      - DB_NAME=officemanager
+      - DB_USER=officemanager
+      - DB_PASSWORD=qweqwe123
       - DB_HOST=database
       - DB_PORT=5432
       - REDIS_HOST=redis
