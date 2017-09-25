@@ -3,10 +3,8 @@ version: '3'
 services:
   database:
     image: postgres
-    environment:
-      POSTGRES_USER: officemanager
-      POSTGRES_DB: officemanager
-      POSTGRES_PASSWORD: qweqwe123
+    env_file:
+        - ./development.env
     volumes:
         - ./dbdata:/var/lib/postgresql/data
 
