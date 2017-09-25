@@ -9,5 +9,6 @@ pytz
 python-dateutil==2.6.*
 pillow==4.2.1
 
+psycopg2==2.7.3.1
 gunicorn==19.7.*
 fabric3==1.13.1.post1
