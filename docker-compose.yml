@@ -1,14 +1,14 @@
-version: '3'
+version: '2'
 
 services:
   database:
     image: postgres
     env_file:
-        - ./development.env
+        - .env
     volumes:
         - ./dbdata:/var/lib/postgresql/data
     env_file:
-        - ./development.env
+        - .env
 
   redis:
     image: redis
@@ -16,7 +16,7 @@ services:
       - ALLOW_EMPTY_PASSWORD=no
       - REDIS_PASSWORD=redis
     env_file:
-      - ./development.env
+      - .env
 
   web:
     build: ./
@@ -28,7 +28,7 @@ services:
                       python3 manage.py migrate &&
                       python3 manage.py runserver 0.0.0.0:8000"
     env_file:
-      - ./development.env
+      - .env
     volumes:
       - ./static:/opt/public/static
 
