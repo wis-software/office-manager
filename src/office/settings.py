@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
     'graphene_django',
 
     'apps.employees'
@@ -170,9 +171,6 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=1),
     'JWT_ALLOW_REFRESH': True,
 }
-
-INSTALLED_APPS += ('rest_framework', )
-
 
 GRAPHENE = {
     'SCHEMA': 'office.schema.schema'
