@@ -4,6 +4,13 @@ djangorestframework==3.6.*
 django-crispy-forms==1.6.*
 django-filter==1.0.4
 
+graphene==2.0.1
+graphene-django==2.0.0
+graphene-django-extras==0.1.7
+graphql-core==2.0
+graphql-relay==0.4.5
+
+
 pytz
 python-dateutil==2.6.*
 pillow==4.2.1

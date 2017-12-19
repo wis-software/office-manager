@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'graphene_django',
+
+    'apps.employees'
 ]
 
 MIDDLEWARE = [
@@ -168,6 +172,16 @@ JWT_AUTH = {
 }
 
 INSTALLED_APPS += ('rest_framework', )
+
+
+GRAPHENE = {
+    'SCHEMA': 'office.schema.schema'
+}
+
+GRAPHENE_DJANGO_EXTRAS = {
+    'DEFAULT_PAGE_SIZE': 50,
+    'MAX_PAGE_SIZE': 100
+}
 
 if DEBUG:
     INTERNAL_IPS = ('127.0.0.1', )
