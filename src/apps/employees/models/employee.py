@@ -7,6 +7,10 @@ __all__ = [
 ]
 
 
+def current_date():
+    return timezone.now().date()
+
+
 class Employee(models.Model):
     first_name = models.CharField(_('first name'), default='', max_length=128)
     last_name = models.CharField(_('last name'), default='', max_length=128)
@@ -25,7 +29,7 @@ class Employee(models.Model):
         'employees.Position', related_name='employees',
         verbose_name=_('position'),
     )
-    work_started = models.DateField(_('work started'), default=timezone.now)
+    work_started = models.DateField(_('work started'), default=current_date)
     phone_number = models.CharField(
         _('primary phone'), default='', blank=True, max_length=128
     )

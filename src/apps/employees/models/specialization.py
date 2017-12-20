@@ -9,7 +9,7 @@ __all__ = [
 
 class Specialization(models.Model):
 
-    name = models.CharField(verbose_name=_('name'), max_length=512, default='')
+    name = models.CharField(_('name'), max_length=512, default='', unique=True)
 
     def __str__(self):
         return self.name

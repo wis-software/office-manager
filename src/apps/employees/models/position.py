@@ -9,7 +9,7 @@ __all__ = [
 
 class Position(models.Model):
 
-    name = models.CharField(verbose_name=_('name'), max_length=512, default='')
+    name = models.CharField(_('name'), max_length=512, default='', unique=True)
 
     def __str__(self):
         return self.name
@@ -18,3 +18,4 @@ class Position(models.Model):
         ordering = ('name',)
         verbose_name = _('position')
         verbose_name_plural = _('positions')
+
