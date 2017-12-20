@@ -18,7 +18,6 @@ class EmployeeType(DjangoObjectType):
             'position': ['exact'],
             'id': ['exact']
         }
-        interfaces = (graphene.relay.Node,)
 
 
 class PositionType(DjangoObjectType):
@@ -44,7 +43,6 @@ class PositionType(DjangoObjectType):
             'name': ['exact', 'icontains', 'istartswith'],
             'id': ['exact']
         }
-        interfaces = (graphene.relay.Node,)
 
 
 class SpecializationType(DjangoObjectType):
@@ -54,4 +52,3 @@ class SpecializationType(DjangoObjectType):
             'name': ['exact', 'icontains', 'istartswith'],
             'id': ['exact'],
         }
-        interfaces = (graphene.relay.Node,)
