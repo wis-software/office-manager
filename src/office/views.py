@@ -1,15 +1,44 @@
+from django.http import JsonResponse
+from django.utils.decorators import method_decorator
+from django.utils.translation import ugettext_lazy as _
 from graphene_django.views import GraphQLView
-from rest_framework.decorators import (
-    permission_classes, api_view
-)
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
+from rest_framework.exceptions import APIException
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+
+
+def check_jwt_decorator(func):
+    """
+    Check JWT Token by using DRF Authentication class.
+    Returns UNAUTHORIZED response if headers don't contain alive token.
+
+    :param func:
+    :return:
+    """
+
+    def wrap(request, *args, **kwargs):
+        try:
+            auth_tuple = JSONWebTokenAuthentication().authenticate(request)
+        except APIException as e:
+            return JsonResponse({'details': str(e)}, status=e.status_code)
+        except Exception as e:
+            raise e
+        if auth_tuple is None:
+            return JsonResponse({'details': _('Unauthorized user')},
+                                status=status.HTTP_401_UNAUTHORIZED)
+        request.user, request.auth = auth_tuple
+        return func(request, *args, **kwargs)
+
+    return wrap
 
 
 class DRFAuthenticatedGraphQLView(GraphQLView):
+    """
+    Extended default GraphQLView.
+    """
 
-    @classmethod
-    def as_view(cls, *args, **kwargs):
-        view = super(DRFAuthenticatedGraphQLView, cls).as_view(*args, **kwargs)
-        view = permission_classes((IsAuthenticated,))(view)
-        # view = api_view(['GET', 'POST'])(view)
-        return view
+    @method_decorator(check_jwt_decorator)
+    def dispatch(self, request, *args, **kwargs):
+        return super(DRFAuthenticatedGraphQLView, self).dispatch(request,
+                                                                 *args,
+                                                                 **kwargs)
