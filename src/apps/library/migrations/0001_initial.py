@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('employees', '0002_auto_20171220_1622'),
+        ('employees', '0001_initial'),
     ]
 
     operations = [
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='created')),
                 ('name', models.CharField(max_length=1024, verbose_name='name')),
                 ('author', models.CharField(max_length=256, verbose_name='author')),
-                ('publisher', models.CharField(max_length=256, verbose_name='author')),
+                ('publisher', models.CharField(max_length=256, verbose_name='publisher')),
                 ('description', models.TextField(blank=True, default='', verbose_name='description')),
                 ('specializations', models.ManyToManyField(blank=True, related_name='books', to='employees.Specialization', verbose_name='specializations')),
             ],
@@ -42,8 +42,8 @@ class Migration(migrations.Migration):
                 ('employee', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='holder_history', to='employees.Employee', verbose_name='employee')),
             ],
             options={
-                'verbose_name': 'book',
-                'verbose_name_plural': 'books',
+                'verbose_name': 'holder',
+                'verbose_name_plural': 'holders',
             },
         ),
         migrations.CreateModel(

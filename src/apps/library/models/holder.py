@@ -17,5 +17,5 @@ class Holder(models.Model):
     refunded_at = models.DateTimeField(_('refunded at'), null=True, blank=True)
 
     class Meta:
-        verbose_name = _('book')
-        verbose_name_plural = _('books')
+        verbose_name = _('holder')
+        verbose_name_plural = _('holders')

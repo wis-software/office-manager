@@ -1,7 +1,6 @@
 from graphene_django.types import ObjectType
 from graphene_django_extras import DjangoFilterPaginateListField
 
-from apps.employees import models
 from apps.employees.schema import mutation
 from apps.employees.schema import types
 
@@ -17,15 +16,6 @@ class EmployeeQuery(ObjectType):
 
     class Meta:
         abstract = True
-
-    def resolve_specializations(self, info):
-        return models.Specialization.objects.all()
-
-    def resolve_positions(self, info):
-        return models.Position.objects.all()
-
-    def resolve_employees(self, info):
-        return models.Employee.objects.all()
 
 
 class EmployeeMutation(ObjectType):

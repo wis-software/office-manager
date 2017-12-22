@@ -10,7 +10,7 @@ class Book(models.Model):
     created = models.DateTimeField(_('created'), auto_now_add=True)
     name = models.CharField(_('name'), max_length=1024)
     author = models.CharField(_('author'), max_length=256)
-    publisher = models.CharField(_('author'), max_length=256)
+    publisher = models.CharField(_('publisher'), max_length=256)
     description = models.TextField(_('description'), default='', blank=True)
     tags = models.ManyToManyField('library.Tag', verbose_name=_('tags'),
                                   blank=True, related_name='books')
