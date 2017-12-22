@@ -58,7 +58,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'verbose_name': 'offer',
-                'verbose_name_plural': 'offer',
+                'verbose_name_plural': 'offers',
             },
         ),
         migrations.CreateModel(

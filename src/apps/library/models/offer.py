@@ -13,6 +13,7 @@ class Offer(models.Model):
     employee = models.ForeignKey('employees.Employee',
                                  verbose_name=_('employee'),
                                  related_name='book_offers')
+    name = models.CharField(_('name'), max_length=512, default='', blank=True)
     url = models.CharField(_('url'), max_length=512, default='', blank=True)
     description = models.TextField(_('description'), default='', blank=True)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
@@ -22,4 +23,4 @@ class Offer(models.Model):
 
     class Meta:
         verbose_name = _('offer')
-        verbose_name_plural = _('offer')
+        verbose_name_plural = _('offers')

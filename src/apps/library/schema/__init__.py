@@ -12,6 +12,10 @@ __all__ = [
 
 
 class LibraryQuery(ObjectType):
+    """
+    Library Query type for GraphQL.
+    """
+
     books = DjangoFilterPaginateListField(types.BookType)
     holders = DjangoFilterPaginateListField(types.BookHolderType)
     offers = DjangoFilterPaginateListField(types.BookOfferType)
@@ -39,6 +43,10 @@ class LibraryQuery(ObjectType):
 
 
 class LibraryMutation(ObjectType):
+    """
+    Library Mutation type.
+    """
+
     tag_create = mutation.ModelTagMutation.CreateField()
     tag_update = mutation.ModelTagMutation.UpdateField()
     tag_delete = mutation.ModelTagMutation.DeleteField()
