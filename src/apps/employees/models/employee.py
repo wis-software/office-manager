@@ -12,8 +12,8 @@ def current_date():
 
 
 class Employee(models.Model):
-    first_name = models.CharField(_('first name'), default='', max_length=128)
-    last_name = models.CharField(_('last name'), default='', max_length=128)
+    first_name = models.CharField(_('first name'), max_length=128)
+    last_name = models.CharField(_('last name'), max_length=128)
     middle_name = models.CharField(
         _('middle name'), default='', max_length=128, blank=True
     )
