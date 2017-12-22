@@ -23,16 +23,16 @@ class EmployeeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class EmployeeMutation(DjangoSerializerMutation):
+class ModelEmployeeMutation(DjangoSerializerMutation):
     class Meta:
         serializer_class = EmployeeSerializer
 
 
-class PositionMutation(DjangoSerializerMutation):
+class ModelPositionMutation(DjangoSerializerMutation):
     class Meta:
         serializer_class = PositionSerializer
 
 
-class SpecializationMutation(DjangoSerializerMutation):
+class ModelSpecializationMutation(DjangoSerializerMutation):
     class Meta:
         serializer_class = SpecializationSerializer

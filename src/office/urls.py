@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^api-token-auth/$', obtain_jwt_token),
     url(r'^api-token-refresh/$', refresh_jwt_token),
     url(r'^api-token-verify/$', verify_jwt_token),
-    url(r'^graphql$', DRFAuthenticatedGraphQLView.as_view(graphiql=True)),
+    url(r'^graphql/$', DRFAuthenticatedGraphQLView.as_view(graphiql=True)),
 ]
 
 if settings.DEBUG:
@@ -20,3 +20,4 @@ if settings.DEBUG:
     urlpatterns = [
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
+
