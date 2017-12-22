@@ -8,8 +8,6 @@ graphene==2.0.1
 graphene-django==2.0.0
 graphene-django-extras==0.2.1
 graphql-core==2.0
-graphql-relay==0.4.5
-
 
 pytz
 python-dateutil==2.6.*
