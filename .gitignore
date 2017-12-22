@@ -18,3 +18,5 @@ src/org.kde.konsole.desktop
 src/.vscode
 env/
 venv/
+dbdata
+/static/

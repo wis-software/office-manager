@@ -39,6 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+    'graphene_django',
+
+    'apps.employees'
 ]
 
 MIDDLEWARE = [
@@ -167,7 +172,15 @@ JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
 }
 
-INSTALLED_APPS += ('rest_framework', )
+GRAPHENE = {
+    'SCHEMA': 'office.schema.schema'
+}
+
+GRAPHENE_DJANGO_EXTRAS = {
+    'DEFAULT_PAGINATION_CLASS': 'graphene_django_extras.paginations.LimitOffsetGraphqlPagination',
+    'DEFAULT_PAGE_SIZE': 50,
+    'MAX_PAGE_SIZE': 100
+}
 
 if DEBUG:
     INTERNAL_IPS = ('127.0.0.1', )

@@ -30,7 +30,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./static:/opt/public/statics
+      - ./static:/opt/public/static
       - ./src:/opt/office-manager
 
   nginx:
