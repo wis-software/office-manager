@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'graphene_django',
 
-    'apps.employees'
+    'apps.employees',
+    'apps.contacts'
 ]
 
 MIDDLEWARE = [

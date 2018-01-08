@@ -17,6 +17,8 @@ def check_jwt_decorator(func):
     """
 
     def wrap(request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return func(request, *args, **kwargs)
         try:
             auth_tuple = JSONWebTokenAuthentication().authenticate(request)
         except APIException as e:
