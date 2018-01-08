@@ -1,6 +1,9 @@
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+
+from apps.contacts.mixins import ContactMixin
 
 __all__ = [
     'Employee'
@@ -11,7 +14,9 @@ def current_date():
     return timezone.now().date()
 
 
-class Employee(models.Model):
+class Employee(ContactMixin, models.Model):
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='employee')
     first_name = models.CharField(_('first name'), max_length=128)
     last_name = models.CharField(_('last name'), max_length=128)
     middle_name = models.CharField(
@@ -30,13 +35,6 @@ class Employee(models.Model):
         verbose_name=_('position'),
     )
     work_started = models.DateField(_('work started'), default=current_date)
-    phone_number = models.CharField(
-        _('primary phone'), default='', blank=True, max_length=128
-    )
-    additional_phone_number = models.CharField(
-        _('additional phone'), default='', max_length=128, blank=True
-    )
-    contact_email = models.EmailField(_('email'), default='', blank=True)
 
     def __str__(self):
         return '{first_name} {last_name}'.format(
@@ -46,3 +44,4 @@ class Employee(models.Model):
     class Meta:
         verbose_name = _('employee')
         verbose_name_plural = _('employees')
+

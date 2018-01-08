@@ -37,9 +37,19 @@ class EmployeeMutation(ObjectType):
     specialization_update = mutation.ModelSpecializationMutation.UpdateField()
     specialization_delete = mutation.ModelSpecializationMutation.DeleteField()
 
-    employee_create = mutation.ModelEmployeeMutation.CreateField()
+    employee_create = mutation.ModelEmployeeMutation.get_mutation_field(
+        'create_mutation'
+    )
     employee_update = mutation.ModelEmployeeMutation.UpdateField()
     employee_delete = mutation.ModelEmployeeMutation.DeleteField()
+
+    change_password = mutation.ModelEmployeeMutation.get_mutation_field(
+        'password_mutation'
+    )
+
+    change_current_employee = mutation.ModelEmployeeMutation.get_mutation_field(
+        'current_employee_mutation'
+    )
 
     class Meta:
         abstract = True

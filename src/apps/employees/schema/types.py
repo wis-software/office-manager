@@ -7,6 +7,7 @@ from apps.employees import models
 
 
 class EmployeeType(DjangoObjectType):
+
     class Meta:
         model = models.Employee
 
