@@ -11,7 +11,6 @@ USER_MODEL = get_user_model()
 
 
 class ShortUserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = USER_MODEL
         fields = ('username', 'id')
@@ -31,6 +30,7 @@ class PositionSerializer(serializers.ModelSerializer):
 
 class EmployeeSerializer(serializers.ModelSerializer):
     user = ShortUserSerializer(read_only=True)
+
     class Meta:
         model = models.Employee
         fields = '__all__'
