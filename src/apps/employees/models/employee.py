@@ -16,7 +16,7 @@ def current_date():
 
 class Employee(ContactMixin, models.Model):
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='employee')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='employee')
     first_name = models.CharField(_('first name'), max_length=128)
     last_name = models.CharField(_('last name'), max_length=128)
     middle_name = models.CharField(

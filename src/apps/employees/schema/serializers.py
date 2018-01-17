@@ -76,3 +76,21 @@ class ChangePasswordSerializer(serializers.Serializer):
         if not self.user.check_password(attrs['old_password']):
             raise serializers.ValidationError(_('Incorrect old password'))
         return attrs
+
+
+class EmployeeUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Employee
+        exclude = ('user', 'position', 'specializations')
+        extra_kwargs = {
+            'first_name': {'required': False},
+            'last_name': {'required': False},
+            'middle_name': {'required': False},
+            'notes': {'required': False},
+            'birthday': {'required': False},
+            'specializations': {True},
+            'position': {'read_only': True},
+            'work_started': {'required': False}
+        }
+

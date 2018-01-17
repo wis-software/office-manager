@@ -1,5 +1,6 @@
 from django.contrib.auth import login
 from graphene_django_extras import DjangoSerializerMutation
+from rest_framework import permissions
 
 from apps.employees.schema import serializers as app_serializers
 from apps.main.schema.mutation import BaseMutationSerializer
@@ -47,15 +48,13 @@ class ModelEmployeeMutation(BaseMutationSerializer):
     def current_employee_mutation(cls, root, info, **kwargs):
         data = cls.get_formatted_data('current_employee_mutation', kwargs)
         employee = info.context.user.employee
-        serialized_data = dict(app_serializers.EmployeeSerializer(
-            instance=employee).data)
-        serialized_data.update(data)
-        serializer = app_serializers.EmployeeSerializer(
-            instance=employee, data=serialized_data
+        serializer = app_serializers.EmployeeUpdateSerializer(
+            instance=employee, data=data
         )
         if not serializer.is_valid():
             return cls.get_serializer_errors(serializer)
-        return cls.perform_mutate(serializer.instance, info)
+        obj = serializer.save()
+        return cls.perform_mutate(obj, info)
 
     class Mutation:
         mapper = {
@@ -67,7 +66,7 @@ class ModelEmployeeMutation(BaseMutationSerializer):
                 'serializer': app_serializers.EmployeeCreateSerializer,
             },
             'current_employee_mutation': {
-                'serializer': app_serializers.EmployeeSerializer,
+                'serializer': app_serializers.EmployeeUpdateSerializer,
             }
         }
 
