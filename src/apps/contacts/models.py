@@ -8,6 +8,7 @@ class BaseContact(models.Model):
                                  related_name='%(class)s_contact_list')
     is_primary = models.BooleanField(_('is primary'), default=False)
     is_active = models.BooleanField(_('is active'), default=True)
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
 
     class Meta:
         abstract = True
