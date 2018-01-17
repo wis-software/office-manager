@@ -7,7 +7,6 @@ __all__ = [
 
 
 class Book(models.Model):
-    created = models.DateTimeField(_('created'), auto_now_add=True)
     name = models.CharField(_('name'), max_length=1024)
     author = models.CharField(_('author'), max_length=256)
     publisher = models.CharField(_('publisher'), max_length=256)
@@ -17,6 +16,7 @@ class Book(models.Model):
     specializations = models.ManyToManyField('employees.specialization',
                                              blank=True, related_name='books',
                                              verbose_name=_('specializations'))
+    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
 
     def __str__(self):
         return self.name

@@ -15,11 +15,13 @@ class Offer(models.Model):
                                  related_name='book_offers')
     name = models.CharField(_('name'), max_length=512, default='', blank=True)
     url = models.CharField(_('url'), max_length=512, default='', blank=True)
+    price = models.IntegerField(_('price'), default=0)
+    count = models.PositiveIntegerField(_('count'), default=1)
     description = models.TextField(_('description'), default='', blank=True)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
 
     def __str__(self):
-        return self.url
+        return self.name or self.url
 
     class Meta:
         verbose_name = _('offer')
