@@ -13,8 +13,8 @@ class ContactMixin(object):
         >> obj.get_contacts()
         << {'email': [], 'skype': []}
 
-        :param is_primary:
-        :return:
+        :param is_primary: bool Return only primary contacts.
+        :return: dict
         """
         subclasses = BaseContact.__subclasses__()
         results = {}
