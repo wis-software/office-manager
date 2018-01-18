@@ -16,3 +16,4 @@ class ModelPositionMutation(DjangoSerializerMutation):
 class ModelSpecializationMutation(DjangoSerializerMutation):
     class Meta:
         serializer_class = app_serializers.SpecializationSerializer
+
