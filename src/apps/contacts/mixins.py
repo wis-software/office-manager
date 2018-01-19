@@ -3,7 +3,7 @@ from apps.contacts.models import BaseContact
 
 class ContactMixin(object):
     """
-    Would be used for adding contacts functionality to models with contact data.
+    Would be used for adding contacts functionality to Employee model.
     """
 
     def get_contacts(self, is_primary=False):
@@ -19,7 +19,7 @@ class ContactMixin(object):
         subclasses = BaseContact.__subclasses__()
         results = {}
         for cls in subclasses:
-            queryset = cls.objects.filter(employee_id=self.id)
+            queryset = cls.objects.filter(employee_id=self.id, is_active=True)
             key, verbose = cls.CONTACT_EXTRA_DATA
             if is_primary:
                 queryset = queryset.filter(is_primary=True)
