@@ -25,7 +25,7 @@ class SerializerMutationOptions(BaseOptions):
     resolver = None
 
 
-class BaseMutationSerializer(graphene.ObjectType):
+class SerializerMutation(graphene.ObjectType):
     non_field_error = graphene.String()
 
     ok = graphene.Boolean(
@@ -54,7 +54,7 @@ class BaseMutationSerializer(graphene.ObjectType):
         _meta.model = model
         _meta.input_field_name = output_field_name
 
-        super(BaseMutationSerializer, cls).__init_subclass_with_meta__(
+        super(SerializerMutation, cls).__init_subclass_with_meta__(
             _meta=_meta, description=description, **options
         )
 

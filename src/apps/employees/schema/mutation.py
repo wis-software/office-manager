@@ -1,16 +1,15 @@
 from django.contrib.auth import login
+from django.conf import settings
 from graphene_django_extras import DjangoSerializerMutation
-from rest_framework import permissions
 
 from apps.employees.schema import serializers as app_serializers
 from apps.employees.models import Employee
 from apps.employees.schema.types import IDType
-from apps.main.schema.mutation import BaseMutationSerializer
+from apps.main.schema.mutation import SerializerMutation
 from apps.main.schema.types import ResultResponse
-from office import settings
 
 
-class ModelEmployeeMutation(BaseMutationSerializer):
+class ModelEmployeeMutation(SerializerMutation):
 
     @classmethod
     def password_mutation(cls, root, info, serializer_class, input_field_name,
@@ -34,6 +33,7 @@ class ModelEmployeeMutation(BaseMutationSerializer):
         user.set_password(new_password)
         user.save()
         if settings.DEBUG and user == info.context.user:
+            # TODO: check logic
             login(user=user, request=info.context)
         return cls(ok=True, errors=None)
 
