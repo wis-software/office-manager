@@ -17,11 +17,6 @@ class ModelEmployeeMutation(SerializerMutation):
         """
         Change employee password.
         Change password for current employee if we have no passed employee value.
-
-        :param root:
-        :param info:
-        :param kwargs:
-        :return:
         """
         data = cls.get_formatted_data(input_field_name, kwargs)
         user = info.context.user
