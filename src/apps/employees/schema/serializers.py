@@ -40,6 +40,14 @@ class EmployeeCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(validators=[validate_password])
     username = serializers.CharField(validators=[UnicodeUsernameValidator()])
 
+    def validate(self, attrs):
+        username = attrs['username']
+        if USER_MODEL.objects.filter(username=username).exists():
+            raise serializers.ValidationError({
+                'username': _('User already exists')
+            })
+        return attrs
+
     @transaction.atomic
     def create(self, validated_data):
         """ Create employee with user. """
@@ -93,4 +101,3 @@ class EmployeeUpdateSerializer(serializers.ModelSerializer):
             'position': {'read_only': True},
             'work_started': {'required': False}
         }
-

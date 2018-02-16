@@ -3,6 +3,8 @@ from graphene_django_extras import DjangoSerializerMutation
 from rest_framework import permissions
 
 from apps.employees.schema import serializers as app_serializers
+from apps.employees.models import Employee
+from apps.employees.schema.types import IDType
 from apps.main.schema.mutation import BaseMutationSerializer
 from apps.main.schema.types import ResultResponse
 from office import settings
@@ -11,7 +13,8 @@ from office import settings
 class ModelEmployeeMutation(BaseMutationSerializer):
 
     @classmethod
-    def password_mutation(cls, root, info, **kwargs):
+    def password_mutation(cls, root, info, serializer_class, input_field_name,
+                          **kwargs):
         """
         Change employee password.
         Change password for current employee if we have no passed employee value.
@@ -21,10 +24,9 @@ class ModelEmployeeMutation(BaseMutationSerializer):
         :param kwargs:
         :return:
         """
+        data = cls.get_formatted_data(input_field_name, kwargs)
         user = info.context.user
-        data = cls.get_formatted_data('password_mutation', kwargs)
-        serializer = app_serializers.ChangePasswordSerializer(data=data,
-                                                              user=user)
+        serializer = serializer_class(data=data, user=user)
         if not serializer.is_valid():
             return cls.get_serializer_errors(serializer)
         user = serializer.user
@@ -36,43 +38,37 @@ class ModelEmployeeMutation(BaseMutationSerializer):
         return cls(ok=True, errors=None)
 
     @classmethod
-    def create_mutation(cls, root, info, **kwargs):
-        data = cls.get_formatted_data('create_mutation', kwargs)
-        serializer = app_serializers.EmployeeCreateSerializer(data=data)
-        if serializer.is_valid():
-            obj = serializer.save()
-            return cls.perform_mutate(obj, info)
-        return cls.get_serializer_errors(serializer)
-
-    @classmethod
-    def current_employee_mutation(cls, root, info, **kwargs):
-        data = cls.get_formatted_data('current_employee_mutation', kwargs)
+    def current_employee_mutation(cls, root, info, serializer_class,
+                                  input_field_name, **kwargs):
+        data = cls.get_formatted_data(input_field_name, kwargs)
         employee = info.context.user.employee
-        serializer = app_serializers.EmployeeUpdateSerializer(
-            instance=employee, data=data
-        )
+        serializer = serializer_class(instance=employee, data=data)
         if not serializer.is_valid():
             return cls.get_serializer_errors(serializer)
         obj = serializer.save()
         return cls.perform_mutate(obj, info)
 
-    class Mutation:
-        mapper = {
+    class Meta:
+        input_field_name = 'employee'
+        model = Employee
+        rules = {
             'password_mutation': {
                 'serializer': app_serializers.ChangePasswordSerializer,
                 'output_type': ResultResponse,
             },
+            'delete_mutation': {
+                'input_type': IDType
+            },
             'create_mutation': {
                 'serializer': app_serializers.EmployeeCreateSerializer,
+            },
+            'update_mutation': {
+                'serializer': app_serializers.EmployeeUpdateSerializer,
             },
             'current_employee_mutation': {
                 'serializer': app_serializers.EmployeeUpdateSerializer,
             }
         }
-
-    class Meta:
-        serializer_class = app_serializers.EmployeeSerializer
-        input_field_name = 'employee'
 
 
 class ModelPositionMutation(DjangoSerializerMutation):

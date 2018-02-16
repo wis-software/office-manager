@@ -30,8 +30,12 @@ class EmployeeMutation(ObjectType):
     employee_create = mutation.ModelEmployeeMutation.get_mutation_field(
         'create_mutation'
     )
-    employee_update = mutation.ModelEmployeeMutation.UpdateField()
-    employee_delete = mutation.ModelEmployeeMutation.DeleteField()
+    employee_update = mutation.ModelEmployeeMutation.get_mutation_field(
+        'update_mutation'
+    )
+    employee_delete = mutation.ModelEmployeeMutation.get_mutation_field(
+        'delete_mutation'
+    )
 
     change_password = mutation.ModelEmployeeMutation.get_mutation_field(
         'password_mutation'

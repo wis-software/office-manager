@@ -1,3 +1,4 @@
+import graphene
 
 from graphene_django.types import DjangoObjectType
 
@@ -39,3 +40,7 @@ class SpecializationType(DjangoObjectType):
             'name': ['exact', 'icontains', 'istartswith'],
             'id': ['exact'],
         }
+
+
+class IDType(graphene.InputObjectType):
+    id = graphene.Int()
