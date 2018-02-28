@@ -43,7 +43,7 @@ class ModelEmployeeMutation(SerializerMutation):
         if not serializer.is_valid():
             return cls.get_serializer_errors(serializer)
         obj = serializer.save()
-        return cls.perform_mutate(obj, info)
+        return cls._perform_mutate(obj, info)
 
     class Meta:
         input_field_name = 'employee'

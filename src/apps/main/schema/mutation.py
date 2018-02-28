@@ -60,7 +60,7 @@ class SerializerMutation(graphene.ObjectType):
         )
 
     @classmethod
-    def get_serializer_class(cls, method_name):
+    def _get_serializer_class(cls, method_name):
         """
         Return serializer class from Meta rules attribute.
         Would be used for overriding.
@@ -73,7 +73,7 @@ class SerializerMutation(graphene.ObjectType):
         )
 
     @classmethod
-    def get_permission_classes(cls, method_name):
+    def _get_permission_classes(cls, method_name):
         """
         Return permission classes.
         Would be used for overriding.
@@ -84,7 +84,7 @@ class SerializerMutation(graphene.ObjectType):
         return cls._meta.rules[method_name].get('permission_classes', ())
 
     @classmethod
-    def get_input_type(cls, method_name):
+    def _get_input_type(cls, method_name):
         """
         Return input type for validation data from request.
 
@@ -93,14 +93,14 @@ class SerializerMutation(graphene.ObjectType):
         """
         input_type = cls._meta.rules[method_name].get('input_type', None)
         if not input_type:
-            serializer_class = cls.get_serializer_class(method_name)
+            serializer_class = cls._get_serializer_class(method_name)
             if serializer_class:
                 input_type = convert_serializer_to_input_type(serializer_class)
         assert input_type, _("Input type is required")
         return input_type
 
     @classmethod
-    def get_output_type(cls, method_name):
+    def _get_output_type(cls, method_name):
         """
         Return output type for mutation response.
 
@@ -121,21 +121,21 @@ class SerializerMutation(graphene.ObjectType):
             'Rule for \"%s\" does not exist' % method_name
 
         serializer_class = serializer_class or \
-                           cls.get_serializer_class(method_name)
-        permissions = cls.get_permission_classes(method_name)
+                           cls._get_serializer_class(method_name)
+        permissions = cls._get_permission_classes(method_name)
         input_field = cls._meta.input_field_name
-        input_type = cls.get_input_type(method_name)
-        output_type = cls.get_output_type(method_name)
+        input_type = cls._get_input_type(method_name)
+        output_type = cls._get_output_type(method_name)
         argument = {input_field: graphene.Argument(input_type)}
         resolver = get_unbound_function(getattr(cls, method_name))
-        resolver = cls.wrap_extra_data(resolver, permissions=permissions,
-                                       serializer_class=serializer_class,
-                                       input_field_name=input_field)
+        resolver = cls._wrap_extra_data(resolver, permissions=permissions,
+                                        serializer_class=serializer_class,
+                                        input_field_name=input_field)
         return graphene.Field(output_type, args=argument, resolver=resolver)
 
     @classmethod
-    def wrap_extra_data(cls, func, permissions, serializer_class,
-                        input_field_name):
+    def _wrap_extra_data(cls, func, permissions, serializer_class,
+                         input_field_name):
         """
         Wrapper for mutation method, which use metadata from Meta class.
 
@@ -191,7 +191,7 @@ class SerializerMutation(graphene.ObjectType):
         serializer = serializer_class(data=data)
         if serializer.is_valid():
             obj = serializer.save()
-            return cls.perform_mutate(obj, info)
+            return cls._perform_mutate(obj, info)
         return cls.get_serializer_errors(serializer)
 
     @classmethod
@@ -219,12 +219,12 @@ class SerializerMutation(graphene.ObjectType):
             serializer = serializer_class(instance=old_obj, data=obj_data)
             if serializer.is_valid():
                 obj = serializer.save()
-                return cls.perform_mutate(obj, info)
+                return cls._perform_mutate(obj, info)
             return cls.get_serializer_errors(serializer)
         return cls(ok=False, non_field_error=_('Object does not exist'))
 
     @classmethod
-    def perform_mutate(cls, obj, info):
+    def _perform_mutate(cls, obj, info):
         data = {'instance': obj, 'ok': True, 'errors': None}
         return cls(**data)
 
