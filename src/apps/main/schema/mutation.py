@@ -26,8 +26,7 @@ class SerializerMutationOptions(BaseOptions):
 
 
 class SerializerMutation(graphene.ObjectType):
-    non_field_error = graphene.String()
-
+    non_field_error = graphene.String(description='Non field error message')
     ok = graphene.Boolean(
         description='Boolean field that return mutation result request.')
     errors = graphene.List(ErrorType, description='Errors list for the field')
@@ -35,8 +34,9 @@ class SerializerMutation(graphene.ObjectType):
     @classmethod
     def __init_subclass_with_meta__(cls, rules=None, input_field_name='data',
                                     model=None, output_field_name='data',
+                                    serializer_class=None,
                                     description='', **options):
-
+        print(options)
         if not rules:
             raise Exception('rules not defined')
 
@@ -51,6 +51,7 @@ class SerializerMutation(graphene.ObjectType):
         })
         _meta.rules = rules
         _meta.output = cls
+        _meta.serializer_class = serializer_class
         _meta.model = model
         _meta.input_field_name = output_field_name
 
@@ -67,7 +68,9 @@ class SerializerMutation(graphene.ObjectType):
         :param method_name: str Mutation method name
         :return: serializers
         """
-        return cls._meta.rules[method_name].get('serializer', None)
+        return cls._meta.rules[method_name].get(
+            'serializer', cls._meta.serializer_class
+        )
 
     @classmethod
     def get_permission_classes(cls, method_name):
@@ -78,9 +81,7 @@ class SerializerMutation(graphene.ObjectType):
         :param method_name: str Mutation method name
         :return:
         """
-        if method_name in cls._meta.rules[method_name]:
-            return cls._meta.rules[method_name]['permission_classes']
-        return None
+        return cls._meta.rules[method_name].get('permission_classes', ())
 
     @classmethod
     def get_input_type(cls, method_name):
@@ -88,17 +89,14 @@ class SerializerMutation(graphene.ObjectType):
         Return input type for validation data from request.
 
         :param method_name: str Mutation method name
-        :return:
+        :return: graphene.InputObjectType subclass object
         """
-        serializer_class = cls.get_serializer_class(method_name)
-        if 'input_type' in cls._meta.rules[method_name]:
-            input_type = cls._meta.rules[method_name]['input_type']
-        elif serializer_class:
-            input_type = convert_serializer_to_input_type(serializer_class)
-            assert not isinstance(input_type, graphene.InputObjectType)
-        else:
-            input_type = cls._meta.rules[method_name].get('input_type', None)
-        assert input_type
+        input_type = cls._meta.rules[method_name].get('input_type', None)
+        if not input_type:
+            serializer_class = cls.get_serializer_class(method_name)
+            if serializer_class:
+                input_type = convert_serializer_to_input_type(serializer_class)
+        assert input_type, _("Input type is required")
         return input_type
 
     @classmethod
@@ -109,10 +107,7 @@ class SerializerMutation(graphene.ObjectType):
         :param method_name: str Mutation method name
         :return:
         """
-        output_type = cls
-        if 'output_type' in cls._meta.rules[method_name]:
-            output_type = cls._meta.rules[method_name]['output_type']
-        return output_type
+        return cls._meta.rules[method_name].get('output_type', cls)
 
     @classmethod
     def get_mutation_field(cls, method_name, serializer_class=None):
@@ -122,6 +117,9 @@ class SerializerMutation(graphene.ObjectType):
         :param method_name: str Mutation method name
         :return: function Resolver
         """
+        assert method_name in cls._meta.rules, \
+            'Rule for \"%s\" does not exist' % method_name
+
         serializer_class = serializer_class or \
                            cls.get_serializer_class(method_name)
         permissions = cls.get_permission_classes(method_name)
@@ -149,11 +147,11 @@ class SerializerMutation(graphene.ObjectType):
         """
 
         def wrapper(root, info, **kwargs):
-            if permissions:
-                for perm_cls in permissions:
-                    if not perm_cls().has_permission(info.context, None):
-                        return cls(ok=False, errors=None,
-                                   non_field_error=_('Permission denied'))
+            # check permissions for mutation endpoint
+            for perm_cls in permissions:
+                if not perm_cls().has_permission(info.context, None):
+                    return cls(ok=False, errors=None,
+                               non_field_error=_('Permission denied'))
             return func(root, info, serializer_class=serializer_class,
                         input_field_name=input_field_name, **kwargs)
 
@@ -206,7 +204,7 @@ class SerializerMutation(graphene.ObjectType):
         if obj:
             obj.delete()
             return cls(ok=True, errors=None, instance=None)
-        return cls(ok=False, non_field_error=_('Object does not exists'))
+        return cls(ok=False, non_field_error=_('Object does not exist'))
 
     @classmethod
     def update_mutation(cls, root, info, serializer_class, input_field_name,
@@ -223,7 +221,7 @@ class SerializerMutation(graphene.ObjectType):
                 obj = serializer.save()
                 return cls.perform_mutate(obj, info)
             return cls.get_serializer_errors(serializer)
-        return cls(ok=False, non_field_error=_('Object does not exists'))
+        return cls(ok=False, non_field_error=_('Object does not exist'))
 
     @classmethod
     def perform_mutate(cls, obj, info):

@@ -1,5 +1,6 @@
+import graphene
 from graphene_django.types import ObjectType
-from graphene_django_extras import DjangoFilterPaginateListField
+from graphene_django_extras import DjangoFilterPaginateListField, DjangoObjectField
 
 from apps.employees.schema import mutation
 from apps.employees.schema import types
@@ -13,6 +14,10 @@ class EmployeeQuery(ObjectType):
     positions = DjangoFilterPaginateListField(types.PositionType)
     specializations = DjangoFilterPaginateListField(types.SpecializationType)
     employees = DjangoFilterPaginateListField(types.EmployeeType)
+    current_employee = graphene.Field(types.EmployeeType)
+
+    def resolve_current_employee(self, info):
+        return info.context.user.employee
 
     class Meta:
         abstract = True
@@ -41,7 +46,7 @@ class EmployeeMutation(ObjectType):
         'password_mutation'
     )
 
-    change_current_employee = mutation.ModelEmployeeMutation.get_mutation_field(
+    current_employee = mutation.ModelEmployeeMutation.get_mutation_field(
         'current_employee_mutation'
     )
 

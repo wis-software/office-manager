@@ -28,13 +28,15 @@ class ModelEmployeeMutation(SerializerMutation):
         user.set_password(new_password)
         user.save()
         if settings.DEBUG and user == info.context.user:
-            # TODO: check logic
             login(user=user, request=info.context)
         return cls(ok=True, errors=None)
 
     @classmethod
     def current_employee_mutation(cls, root, info, serializer_class,
                                   input_field_name, **kwargs):
+        """
+        Change employee data for current user.
+        """
         data = cls.get_formatted_data(input_field_name, kwargs)
         employee = info.context.user.employee
         serializer = serializer_class(instance=employee, data=data)
@@ -58,10 +60,10 @@ class ModelEmployeeMutation(SerializerMutation):
                 'serializer': app_serializers.EmployeeCreateSerializer,
             },
             'update_mutation': {
-                'serializer': app_serializers.EmployeeUpdateSerializer,
+                'serializer': app_serializers.EmployeeUpdateSerializer
             },
             'current_employee_mutation': {
-                'serializer': app_serializers.EmployeeUpdateSerializer,
+                'serializer': app_serializers.CurrentEmployeeUpdateSerializer
             }
         }
 

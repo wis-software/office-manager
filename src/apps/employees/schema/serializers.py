@@ -101,3 +101,9 @@ class EmployeeUpdateSerializer(serializers.ModelSerializer):
             'position': {'read_only': True},
             'work_started': {'required': False}
         }
+
+
+class CurrentEmployeeUpdateSerializer(EmployeeUpdateSerializer):
+    # TODO: it is a fix for graphene, which raises an error for same type names
+    # TODO: don't touch it. Created by Eugene Hatsko
+    pass
