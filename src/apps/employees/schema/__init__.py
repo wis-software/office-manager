@@ -1,5 +1,6 @@
+import graphene
 from graphene_django.types import ObjectType
-from graphene_django_extras import DjangoFilterPaginateListField
+from graphene_django_extras import DjangoFilterPaginateListField, DjangoObjectField
 
 from apps.employees.schema import mutation
 from apps.employees.schema import types
@@ -13,6 +14,10 @@ class EmployeeQuery(ObjectType):
     positions = DjangoFilterPaginateListField(types.PositionType)
     specializations = DjangoFilterPaginateListField(types.SpecializationType)
     employees = DjangoFilterPaginateListField(types.EmployeeType)
+    current_employee = graphene.Field(types.EmployeeType)
+
+    def resolve_current_employee(self, info):
+        return info.context.user.employee
 
     class Meta:
         abstract = True
@@ -27,9 +32,23 @@ class EmployeeMutation(ObjectType):
     specialization_update = mutation.ModelSpecializationMutation.UpdateField()
     specialization_delete = mutation.ModelSpecializationMutation.DeleteField()
 
-    employee_create = mutation.ModelEmployeeMutation.CreateField()
-    employee_update = mutation.ModelEmployeeMutation.UpdateField()
-    employee_delete = mutation.ModelEmployeeMutation.DeleteField()
+    employee_create = mutation.ModelEmployeeMutation.get_mutation_field(
+        'create_mutation'
+    )
+    employee_update = mutation.ModelEmployeeMutation.get_mutation_field(
+        'update_mutation'
+    )
+    employee_delete = mutation.ModelEmployeeMutation.get_mutation_field(
+        'delete_mutation'
+    )
+
+    change_password = mutation.ModelEmployeeMutation.get_mutation_field(
+        'password_mutation'
+    )
+
+    current_employee = mutation.ModelEmployeeMutation.get_mutation_field(
+        'current_employee_mutation'
+    )
 
     class Meta:
         abstract = True

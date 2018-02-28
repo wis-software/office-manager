@@ -1,3 +1,4 @@
+import graphene
 
 from graphene_django.types import DjangoObjectType
 
@@ -6,6 +7,7 @@ from apps.employees import models
 
 
 class EmployeeType(DjangoObjectType):
+
     class Meta:
         model = models.Employee
 
@@ -38,3 +40,7 @@ class SpecializationType(DjangoObjectType):
             'name': ['exact', 'icontains', 'istartswith'],
             'id': ['exact'],
         }
+
+
+class IDType(graphene.InputObjectType):
+    id = graphene.Int()

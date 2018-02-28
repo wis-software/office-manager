@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'graphene_django',
 
+    'apps.main',
     'apps.employees',
     'apps.contacts',
     'apps.library',
