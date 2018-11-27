@@ -1,5 +1,5 @@
 # python image using Debian Jessie
-FROM python:latest
+FROM python:3.5
 ENV PYTHONUNBUFFERED 1
 COPY ./src /opt/office-manager
 COPY ./.env /opt/office-manager/.env
