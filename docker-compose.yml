@@ -32,14 +32,5 @@ services:
     volumes:
       - ./static:/opt/public/static
       - ./src:/opt/office-manager
-
-  nginx:
-    image: nginx
-    depends_on:
-      - "web"
-    volumes:
-     - ./nginx_site.conf:/etc/nginx/conf.d/nginx_site.conf
-     - ./static:/opt/nginx_static
     ports:
-     - "80:80"
-    command: /bin/bash -c "cp /etc/nginx/conf.d/nginx_site.conf /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+     - "80:8000"
