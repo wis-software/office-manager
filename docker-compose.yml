@@ -3,8 +3,6 @@ version: '2'
 services:
   database:
     image: postgres
-    env_file:
-        - .env
     volumes:
         - ./dbdata:/var/lib/postgresql/data
     env_file:
@@ -33,4 +31,4 @@ services:
       - ./static:/opt/public/static
       - ./src:/opt/office-manager
     ports:
-     - "80:8000"
+     - "8080:8000"
