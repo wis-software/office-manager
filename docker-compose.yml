@@ -31,4 +31,4 @@ services:
       - ./static:/opt/public/static
       - ./src:/opt/office-manager
     ports:
-     - "8080:8000"
+     - "8081:8000"
