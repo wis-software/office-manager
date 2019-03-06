@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from graphene_django.views import GraphQLView
 from rest_framework import status
 from rest_framework.exceptions import APIException
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 def check_jwt_decorator(func):
@@ -22,7 +22,7 @@ def check_jwt_decorator(func):
             if request.user.is_authenticated:
                 return func(request, *args, **kwargs)
         try:
-            auth_tuple = JSONWebTokenAuthentication().authenticate(request)
+            auth_tuple = JWTAuthentication().authenticate(request)
         except APIException as e:
             return JsonResponse({'details': str(e)}, status=e.status_code)
         except Exception as e:
