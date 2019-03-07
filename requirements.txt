@@ -19,3 +19,4 @@ fabric3==1.13.1.post1
 
 PyJWT==1.5.3
 djangorestframework-jwt==1.11.0
+pylint==2.3.1
