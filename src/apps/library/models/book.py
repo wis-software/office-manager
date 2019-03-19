@@ -16,6 +16,7 @@ class Book(models.Model):
     specializations = models.ManyToManyField('employees.specialization',
                                              blank=True, related_name='books',
                                              verbose_name=_('specializations'))
+    publication_number = models.IntegerField(_('publication number'), default=1, blank=True)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
 
     def __str__(self):
