@@ -8,7 +8,8 @@ __all__ = [
 
 class Book(models.Model):
     name = models.CharField(_('name'), max_length=1024)
-    author = models.CharField(_('author'), max_length=256)
+    authors = models.ManyToManyField('library.Author', verbose_name=_('authors'),
+                                  blank=False, related_name='books')
     publisher = models.CharField(_('publisher'), max_length=256)
     description = models.TextField(_('description'), default='', blank=True)
     tags = models.ManyToManyField('library.Tag', verbose_name=_('tags'),
