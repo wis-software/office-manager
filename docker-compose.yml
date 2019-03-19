@@ -21,10 +21,10 @@ services:
     depends_on:
       - "database"
       - "redis"
-    command: sh -c "python3 manage.py collectstatic --noinput &&
-                    python3 manage.py makemigrations &&
-                    python3 manage.py migrate &&
-                    python3 manage.py runserver 0.0.0.0:8000"
+    command: sh -c "env DJANGO_SETTINGS_MODULE=office.settings python3 manage.py collectstatic --noinput &&
+                    env DJANGO_SETTINGS_MODULE=office.settings python3 manage.py makemigrations &&
+                    env DJANGO_SETTINGS_MODULE=office.settings python3 manage.py migrate &&
+                    env DJANGO_SETTINGS_MODULE=office.settings python3 manage.py runserver 0.0.0.0:8000"
     env_file:
       - .env
     volumes:
