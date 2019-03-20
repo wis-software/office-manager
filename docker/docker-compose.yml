@@ -6,7 +6,7 @@ services:
     volumes:
         - ./dbdata:/var/lib/postgresql/data
     env_file:
-        - .env
+        - ../.env
 
   redis:
     image: redis
@@ -14,10 +14,12 @@ services:
       - ALLOW_EMPTY_PASSWORD=no
       - REDIS_PASSWORD=redis
     env_file:
-      - .env
+      - ../.env
 
   web:
-    build: ./
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
     depends_on:
       - "database"
       - "redis"
@@ -26,9 +28,9 @@ services:
                     python3 manage.py migrate &&
                     python3 manage.py runserver 0.0.0.0:8000"
     env_file:
-      - .env
+      - ../.env
     volumes:
-      - ./static:/opt/public/static
-      - ./src:/opt/office-manager
+      - ../static:/opt/public/static
+      - ../:/opt/office-manager
     ports:
      - "8081:8000"
