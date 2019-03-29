@@ -1,9 +1,9 @@
 # About project
 The backend for internal company's CRM using Python, Django and GraphQL.
 
-Anyone can take part in the development provided abidance with the contribution rules 
+Anyone can take part in the development provided abidance with the contribution rules.
 
-**Pay attention: The priority of this project is the lowest! Any commercial task or colleague's request has more priority.**
+**Pay attention: Any commercial task has more priority.**
 
 ## Getting Started
 
@@ -35,8 +35,6 @@ Or you can install it manually:
 10. Run server `env PYTHONPATH=$(pwd)/src python src/manage.py runserver 0.0.0.0:8001`
 11. Open `http://127.0.0.1:8001/admin/`
 
-
-
 ### Contribution rules
 1. Follow [PEP8](https://www.python.org/dev/peps/pep-0008/)
 2. All comments and tasks names have to be in english!
@@ -52,9 +50,3 @@ Or you can install it manually:
 4. Create the PR, add colleague as reviewer
 5. Move the card task to the **Testing** column
 6. Take care of task testing after deploy to staging to move the task to the **Done** column
-
-### FAQ
-**Who I may add as a reviewer to my PR?**
-
-PR is sent to the colleague who has the most competence in this area.
-To one person you can't send two or more PRs in sequence. For the next PR, you need to choose another competent colleague for this question.
