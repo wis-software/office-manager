@@ -2,9 +2,7 @@ FROM alpine:3.8
 
 ENV PYTHONUNBUFFERED 1
 
-COPY ./src /opt/office-manager
-COPY ./.env /opt/office-manager/.env
-COPY requirements.txt /opt/office-manager/
+COPY ./ /opt/office-manager
 
 RUN apk --update add \
     gcc \
