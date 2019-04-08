@@ -27,7 +27,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', '1lruo1yt1)iu-f)x!=3zd%2i312z$z#khj2#y_7j0_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'NO').lower() in ("yes", "true", "t", "1")
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',') if os.getenv('ALLOWED_HOSTS') else []
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',') if os.getenv('ALLOWED_HOSTS') else ['127.0.0.1']
 
 
 # Application definition
@@ -87,8 +87,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'HOST': os.getenv('POSTGRES_HOST', 'database'),
         'PORT': os.getenv('POSTGRES_PORT', '5432'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
         'NAME': os.getenv('POSTGRES_DB', 'office_manager'),
     }
 }
