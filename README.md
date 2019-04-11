@@ -5,6 +5,13 @@ Anyone can take part in the development provided abidance with the contribution 
 
 **Pay attention: Any commercial task has more priority.**
 
+## Table of contents
+
+1. [Getting started](#getting-started)
+2. [Contribution rules](#contribution-rules)
+3. [Workflow](#workflow)
+4. [Notes](#notes)
+
 ## Getting Started
 
 You can use [Docker](docker/README.md) to install and run the project.
@@ -50,3 +57,13 @@ Or you can install it manually:
 4. Create the PR, add colleague as reviewer
 5. Move the card task to the **Testing** column
 6. Take care of task testing after deploy to staging to move the task to the **Done** column
+
+### Notes
+
+To run tests for all project you need to run following command in project dictionary:
+
+`python manage.py test`
+
+For specific application:
+
+`python manage.py test your_app`
