@@ -17,7 +17,7 @@ class BookType(DjangoObjectType):
         filter_fields = {
             'name': ['icontains', 'istartswith'],
             'description': ['icontains', 'istartswith'],
-            'author': ['icontains', 'istartswith'],
+            'authors': ['in'],
             'tags': ['in'],
             'specializations': ['icontains', 'istartswith'],
             'id': ['exact']
