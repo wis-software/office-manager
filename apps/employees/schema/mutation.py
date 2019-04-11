@@ -11,6 +11,8 @@ from apps.main.schema.types import ResultResponse
 
 class ModelEmployeeMutation(SerializerMutation):
 
+    # pylint: disable=W0613
+
     @classmethod
     def password_mutation(cls, root, info, serializer_class, input_field_name,
                           **kwargs):
@@ -31,6 +33,7 @@ class ModelEmployeeMutation(SerializerMutation):
             login(user=user, request=info.context)
         return cls(ok=True, errors=None)
 
+    # pylint: disable=E1121
     @classmethod
     def current_employee_mutation(cls, root, info, serializer_class,
                                   input_field_name, **kwargs):

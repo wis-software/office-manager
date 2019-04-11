@@ -61,7 +61,7 @@ class EmployeeCreateSerializer(serializers.ModelSerializer):
         model = models.Employee
         exclude = ('user',)
 
-
+# pylint: disable=W0223
 class ChangePasswordSerializer(serializers.Serializer):
     employee = serializers.IntegerField(required=False)
     old_password = serializers.CharField()
@@ -71,7 +71,8 @@ class ChangePasswordSerializer(serializers.Serializer):
         self.user = kwargs.pop('user', None)
         super(ChangePasswordSerializer, self).__init__(*args, **kwargs)
 
-    def validate_employee(self, validated_data):
+    @staticmethod
+    def validate_employee(validated_data):
         try:
             return models.Employee.objects.get(id=validated_data)
         except models.Employee.DoesNotExist:

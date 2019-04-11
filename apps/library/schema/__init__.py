@@ -26,16 +26,20 @@ class LibraryQuery(ObjectType):
     total_offers = graphene.Int()
     total_holders = graphene.Int()
 
-    def resolve_total_books(self, info):
+    @staticmethod
+    def resolve_total_books():
         return models.Book.objects.all().count()
 
-    def resolve_total_tags(self, info):
+    @staticmethod
+    def resolve_total_tags():
         return models.Tag.objects.all().count()
 
-    def resolve_total_offers(self, info):
+    @staticmethod
+    def resolve_total_offers():
         return models.Offer.objects.all().count()
 
-    def resolve_total_holders(self, info):
+    @staticmethod
+    def resolve_total_holders():
         return models.Holder.objects.all().count()
 
     class Meta:

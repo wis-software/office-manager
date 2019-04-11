@@ -16,7 +16,8 @@ class EmployeeQuery(ObjectType):
     employees = DjangoFilterPaginateListField(types.EmployeeType)
     current_employee = graphene.Field(types.EmployeeType)
 
-    def resolve_current_employee(self, info):
+    @staticmethod
+    def resolve_current_employee(info):
         return info.context.user.employee
 
     class Meta:

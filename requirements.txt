@@ -1,9 +1,11 @@
+# Django
 Django~=1.11.5
 django-debug-toolbar~=1.8
 djangorestframework==3.6.*
 django-crispy-forms==1.6.*
 django-filter==1.0.4
 
+# GraphQL
 graphene==2.0.1
 graphene-django==2.0.0
 graphene-django-extras==0.2.1
@@ -17,5 +19,8 @@ psycopg2==2.7.3.1
 gunicorn==19.7.*
 fabric3==1.13.1.post1
 
+# JWT auth
 PyJWT==1.5.3
 djangorestframework-jwt==1.11.0
+
+pylint==2.3.1

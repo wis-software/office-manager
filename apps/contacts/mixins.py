@@ -1,7 +1,7 @@
 from apps.contacts.models import BaseContact
 
 
-class ContactMixin(object):
+class ContactMixin():
     """
     Would be used for adding contacts functionality to Employee model.
     """
@@ -20,7 +20,7 @@ class ContactMixin(object):
         results = {}
         for cls in subclasses:
             queryset = cls.objects.filter(employee_id=self.id, is_active=True)
-            key, verbose = cls.CONTACT_EXTRA_DATA
+            key = cls.CONTACT_EXTRA_DATA[0]
             if is_primary:
                 queryset = queryset.filter(is_primary=True)
             results.setdefault(key, queryset)

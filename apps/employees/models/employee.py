@@ -44,4 +44,3 @@ class Employee(ContactMixin, models.Model):
     class Meta:
         verbose_name = _('employee')
         verbose_name_plural = _('employees')
-

@@ -23,10 +23,10 @@ def check_jwt_decorator(func):
                 return func(request, *args, **kwargs)
         try:
             auth_tuple = JSONWebTokenAuthentication().authenticate(request)
-        except APIException as e:
-            return JsonResponse({'details': str(e)}, status=e.status_code)
-        except Exception as e:
-            raise e
+        except APIException as error:
+            return JsonResponse({'details': str(error)}, status=error.status_code)
+        except Exception as error:
+            raise error
         if auth_tuple is None:
             return JsonResponse({'details': _('Unauthorized user')},
                                 status=status.HTTP_401_UNAUTHORIZED)

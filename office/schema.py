@@ -16,5 +16,5 @@ class Mutation(employee_schema.EmployeeMutation,
                contacts_schema.ContactsMutation):
     pass
 
-
+# pylint: disable=C0103
 schema = graphene.Schema(query=Query, mutation=Mutation)

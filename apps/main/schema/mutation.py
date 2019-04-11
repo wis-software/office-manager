@@ -1,10 +1,9 @@
-import graphene
-
 from collections import OrderedDict
 
-from django.utils.translation import ugettext_lazy as _
+import graphene
 from graphene.types.base import BaseOptions
 from graphene.utils.get_unbound_function import get_unbound_function
+from django.utils.translation import ugettext_lazy as _
 from graphene_django.rest_framework.serializer_converter import \
     convert_serializer_to_input_type
 from graphene_django.rest_framework.types import ErrorType
@@ -31,18 +30,19 @@ class SerializerMutation(graphene.ObjectType):
         description='Boolean field that return mutation result request.')
     errors = graphene.List(ErrorType, description='Errors list for the field')
 
+    # pylint: disable=W0613,W0221
     @classmethod
     def __init_subclass_with_meta__(cls, rules=None, input_field_name='data',
                                     model=None, output_field_name='data',
                                     serializer_class=None,
                                     description='', **options):
-        print(options)
         if not rules:
             raise Exception('rules not defined')
 
         description = description or 'SerializerMutation for {} model'.format(
             model.__name__)
 
+        # pylint: disable=W0201
         _meta = SerializerMutationOptions(cls)
         outputType = object_type_factory(DjangoObjectType, new_model=model)
         _meta.output_type = outputType
@@ -183,6 +183,10 @@ class SerializerMutation(graphene.ObjectType):
         """
         return data.get(input_field_name, None)
 
+    # pylint: disable=E1121
+    # probable reasons:
+    # https://github.com/PyCQA/pylint/issues/2172
+    # https://github.com/PyCQA/pylint/issues/1789
     @classmethod
     def create_mutation(cls, root, info, serializer_class, input_field_name,
                         **kwargs):
@@ -224,7 +228,7 @@ class SerializerMutation(graphene.ObjectType):
         return cls(ok=False, non_field_error=_('Object does not exist'))
 
     @classmethod
-    def _perform_mutate(cls, obj, info):
+    def _perform_mutate(cls, obj):
         data = {'instance': obj, 'ok': True, 'errors': None}
         return cls(**data)
 

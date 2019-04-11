@@ -8,7 +8,8 @@ from apps.library import models
 class BookType(DjangoObjectType):
     is_available = graphene.Boolean()
 
-    def resolve_is_available(self, info):
+    #pylint: disable=E1101
+    def resolve_is_available(self):
         return not self.holder_history.filter(refunded_at=None).exists()
 
     class Meta:
