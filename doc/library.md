@@ -14,6 +14,12 @@ The company has a collection of printed books, which every employee can take to 
     * [Model](#book-model)
     * [Queries](#book-queries)
     * [Mutations](#book-mutations)
+* [Authors](#authors)
+    * [Introduction](#author-introduction)
+    * [Model](#author-model)
+* [Publishers](#authors)
+    * [Introduction](#publisher-introduction)
+    * [Model](#publisher-model)
 * [Holders](#holders)
     * [Introduction](#holder-introduction)
     * [Model](#holder-model)
@@ -34,7 +40,7 @@ The company has a collection of printed books, which every employee can take to 
 
 ### Book Introduction
 
-**Book** is an entity which is a collection of company's books.
+**Book** is an entity which is a collection of the company's books.
 
 ### Book Model
 **Book** contains following information:
@@ -44,13 +50,13 @@ The company has a collection of printed books, which every employee can take to 
 | `name`              | String |                             |
 | `decription`        | Text   |optional                     |
 | `publication_number`| Int    |                             |
-| `authorId`          | Int    | reference to Author model   |
-| `publisherId`       | Int    | reference to Publisher model|
 
-**Other relationships:**
+**Relationships:**
 
 * `tags`
 * `specializations`
+* `authors`
+* `publishers`
 
 
 ### Book Queries
@@ -458,7 +464,7 @@ The company has a collection of printed books, which every employee can take to 
 
 ### Tag Introduction
 
-**Tag** is an identifier for book categorization.
+**Tag** is an identifier for the book categorization.
 
 ### Tag Model
 **Tag** contains following information:
@@ -579,3 +585,31 @@ The company has a collection of printed books, which every employee can take to 
                 }
             }
         }
+
+## Authors
+
+### Author Introduction
+
+**Author** is an entity that represents the book author.
+
+### Author Model
+**Author** contains following information:
+
+| Argument            | Type   | Notes                       |
+|---------------------|:------:|-----------------------------|
+| `name`              | String |                             |
+| `about`             | Text   |optional                     |
+
+## Publishers
+
+### Publisher Introduction
+
+**Publisher** is an entity that represents the book publisher.
+
+### Publisher Model
+**Publisher** contains following information:
+
+| Argument            | Type   | Notes                       |
+|---------------------|:------:|-----------------------------|
+| `name`              | String |                             |
+| `decription`        | Text   |optional                     |
