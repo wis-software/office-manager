@@ -20,6 +20,8 @@ class LibraryQuery(ObjectType):
     holders = DjangoFilterPaginateListField(types.BookHolderType)
     offers = DjangoFilterPaginateListField(types.BookOfferType)
     tags = DjangoFilterPaginateListField(types.TagType)
+    authors = DjangoFilterPaginateListField(types.BookAuthor)
+    publishers = DjangoFilterPaginateListField(types.BookPublisher)
 
     total_books = graphene.Int()
     total_tags = graphene.Int()
@@ -62,6 +64,14 @@ class LibraryMutation(ObjectType):
     offer_create = mutation.ModelOfferMutation.CreateField()
     offer_update = mutation.ModelOfferMutation.UpdateField()
     offer_delete = mutation.ModelOfferMutation.DeleteField()
+
+    author_create = mutation.ModelBookAuthorMutation.CreateField()
+    author_update = mutation.ModelBookAuthorMutation.UpdateField()
+    author_delete = mutation.ModelBookAuthorMutation.DeleteField()
+
+    publisher_create = mutation.ModelBookPublisherMutation.CreateField()
+    publisher_update = mutation.ModelBookPublisherMutation.UpdateField()
+    publisher_delete = mutation.ModelBookPublisherMutation.DeleteField()
 
     class Meta:
         abstract = True

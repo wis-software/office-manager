@@ -36,6 +36,26 @@ class BookHolderType(DjangoObjectType):
         }
 
 
+class BookAuthor(DjangoObjectType):
+    class Meta:
+        model = models.Author
+        filter_fields = {
+            'name': ['exact', 'icontains'],
+            'about': ['exact', 'icontains'],
+            'id': ['exact'],
+        }
+
+
+class BookPublisher(DjangoObjectType):
+    class Meta:
+        model = models.Publisher
+        filter_fields = {
+            'title': ['exact', 'icontains'],
+            'description': ['exact', 'icontains'],
+            'id': ['exact'],
+        }
+
+
 class TagType(DjangoObjectType):
     class Meta:
         model = models.Tag

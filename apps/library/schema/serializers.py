@@ -15,6 +15,18 @@ class BookHolderSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class BookAuthorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Author
+        fields = '__all__'
+
+
+class BookPublisherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Publisher
+        fields = '__all__'
+
+
 class OfferSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Offer
