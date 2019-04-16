@@ -14,12 +14,6 @@ The company has a collection of printed books, which every employee can take to 
     * [Model](#book-model)
     * [Queries](#book-queries)
     * [Mutations](#book-mutations)
-* [Authors](#authors)
-    * [Introduction](#author-introduction)
-    * [Model](#author-model)
-* [Publishers](#authors)
-    * [Introduction](#publisher-introduction)
-    * [Model](#publisher-model)
 * [Holders](#holders)
     * [Introduction](#holder-introduction)
     * [Model](#holder-model)
@@ -35,7 +29,17 @@ The company has a collection of printed books, which every employee can take to 
     * [Model](#tag-model)
     * [Queries](#tag-queries)
     * [Mutations](#tag-mutations)
-
+* [Authors](#authors)
+    * [Introduction](#author-introduction)
+    * [Model](#author-model)
+    * [Queries](#author-queries)
+    * [Mutations](#author-mutations)
+* [Publishers](#publishers)
+    * [Introduction](#publisher-introduction)
+    * [Model](#publisher-model)
+    * [Queries](#publisher-queries)
+    * [Mutations](#publisher-mutations)
+    
 ## Books
 
 ### Book Introduction
@@ -600,6 +604,106 @@ The company has a collection of printed books, which every employee can take to 
 | `name`              | String |                             |
 | `about`             | Text   |optional                     |
 
+### Author Queries
+
+* List of authors
+
+        query { 
+            authors {
+                id
+                name
+            }
+        }
+    Response:
+    
+        {
+            "data": {
+                "authors": [
+                    {
+                        "id": 1,
+                        "name": "Joan Rowling"
+                    }
+                ]
+            }
+        }
+
+### Author Mutations
+
+* Create author
+
+        {
+            mutation: authorCreate{
+                authorCreate(newAuthor: {name: "Joan Rowling", about: "Harry Potter's writer"}){
+                    ok
+                    author {
+                        name
+                    }
+                }
+            }
+        }
+        
+    Response:
+    
+        {
+            "data": {
+                "authorCreate": {
+                    "ok": True,
+                    "author": {
+                        "name": "Joan Rowling",
+                    }
+                }
+            } 
+        }
+
+* Update author
+
+        {
+            mutation: authorUpdate{
+                authorUpdate(newAuthor:{id: 1, name: "Stephen King"}){
+                    ok
+                    author {
+                        id
+                        name
+                    }
+                }
+            }
+        }
+        
+    Response:
+    
+        {
+            "data": {
+                "authorUpdate": {
+                    "ok": True,
+                    "author": {
+                        "id": 1,
+                        "name": "Stephen King"
+                    }
+                }
+            }
+        }
+
+* Delete author
+        
+        {
+            mutation: authorDelete{
+                authorDelete(id: 1){
+                    ok
+                }
+            }
+        }
+        
+    Response:
+   
+        {
+            "data": {
+                "authorDelete" : {
+                    "ok": True
+                }
+            }
+        }
+
+
 ## Publishers
 
 ### Publisher Introduction
@@ -609,7 +713,107 @@ The company has a collection of printed books, which every employee can take to 
 ### Publisher Model
 **Publisher** contains following information:
 
-| Argument            | Type   | Notes                       |
-|---------------------|:------:|-----------------------------|
-| `name`              | String |                             |
-| `decription`        | Text   |optional                     |
+| Argument            | Type   | Notes   |
+|---------------------|:------:|---------|
+| `title`             | String |         |
+| `decription`        | Text   |optional |
+
+### Publisher Queries
+
+* List of publishers
+
+        query { 
+            publishers {
+                id
+                title
+            }
+        }
+    Response:
+    
+        {
+            "data": {
+                "publishers": [
+                    {
+                        "id": 1,
+                        "title": "Bloomsbury"
+                    }
+                ]
+            }
+        }
+        
+      
+### Publisher Mutations
+
+* Create publisher
+
+        {
+            mutation: publisherCreate{
+                publisherCreate(newPublisher: {title: "O'relly"}){
+                    ok
+                    publisher {
+                        title
+                    }
+                }
+            }
+        }
+        
+    Response:
+    
+        {
+            "data": {
+                "publisherCreate": {
+                    "ok": True,
+                    "publisher": {
+                        "title": "O'relly",
+                    }
+                }
+            } 
+        }
+
+* Update publisher
+
+        {
+            mutation: publisherUpdate{
+                publisherUpdate(newPublisher:{id: 1, title: "Macmillan"}){
+                    ok
+                    publisher {
+                        id
+                        title
+                    }
+                }
+            }
+        }
+        
+    Response:
+    
+        {
+            "data": {
+                "offeerUpdate": {
+                    "ok": True,
+                    "publisher": {
+                        "id": 1,
+                        "title": "Macmillan"
+                    }
+                }
+            }
+        }
+
+* Delete publisher
+        
+        {
+            mutation: publisherDelete{
+                publisherDelete(id: 1){
+                    ok
+                }
+            }
+        }
+        
+    Response:
+   
+        {
+            "data": {
+                "publisherDelete" : {
+                    "ok": True
+                }
+            }
+        }
