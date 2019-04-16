@@ -5,5 +5,4 @@ install:
   - pip install -r requirements.txt
 script:
   - find . -name "*.py" -not -path "./venv/*" -not -path "*/migrations/*" -not -path "*/tests/*" ! -name "manage.py" ! -name "*test*.py" ! -name "wsgi.py" | xargs pylint --load-plugins=pylint_django
-  - pylint --load-plugins pylint_django ./*
   - python manage.py test
